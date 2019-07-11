@@ -253,7 +253,7 @@ public:
     
     void read_file(TypedGlobalTable<K, V, V, D>* table){
         string patition_file = StringPrintf("%s/part%d", FLAGS_graph_dir.c_str(), current_shard());
-        //cout<<"Unable to open file: " << patition_file<<endl;
+        std::cout<<"start to open file: " << patition_file<<endl;
         ifstream inFile;
         inFile.open(patition_file.c_str());
         if (!inFile) {

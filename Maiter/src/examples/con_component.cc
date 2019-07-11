@@ -13,27 +13,29 @@ struct PagerankIterateKernel : public IterateKernel<int, int, vector<int> > {
 
 
     PagerankIterateKernel() : zero(0){}
-
+   
+    // CC input format: vid  neighbors'number  nid1  elabel1  ndi2  elabel2  ...
+    // seperated with "\t"
+    // IF INPUT DATA ARE OTHER FORMAT, YOU CAN MODIFY THIS FUNCTION TO FIT IT.
     void read_data(string& line, int& k, vector<int>& data){
-        string linestr(line);
-        int pos = linestr.find("\t");
-        if(pos == -1) return;
-        
-        int source = boost::lexical_cast<int>(linestr.substr(0, pos));
+        char *c_line = (char*)line.c_str();
+        char *pch;
+        pch=strtok(c_line, "\t");
+        int source = atoi(pch);
+
+        pch=strtok(NULL, "\t");
+        int num = atoi(pch);
+        if (num == 0) return;
 
         vector<int> linkvec;
-        string links = linestr.substr(pos+1);
-        int spacepos = 0;
-        while((spacepos = links.find_first_of(" ")) != links.npos){
-            int to;
-            if(spacepos > 0){
-                to = boost::lexical_cast<int>(links.substr(0, spacepos));
-            }
-            links = links.substr(spacepos+1);
-            linkvec.push_back(to);
+        for(int i=0; i<num; i++) {
+            pch=strtok(NULL, "\t");
+            linkvec.push_back(atoi(pch));
+            pch=strtok(NULL, "\t"); //filter elabel
         }
 
         k = source;
+        //std::cout << "source:" << k << std::endl;
         data = linkvec;
     }
 

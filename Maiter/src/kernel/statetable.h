@@ -658,7 +658,8 @@ void StateTable<K, V1, V2, V3>::accumulateF1(const K& k, const V1& v) {
   int b = bucket_for_key(k);
 
   //cout << "accumulate " << k << "\t" << v << endl;
-  CHECK_NE(b, -1) << "No entry for requested key <" << *((int*)&k) <<">"<< "key: "<<k;
+ // CHECK_NE(b, -1) << "No entry for requested key <" << *((int*)&k) <<">"<< "key: "<<k;
+  if (b == -1) return;
   ((IterateKernel<K, V1, V3>*)info_.iterkernel)->accumulate(buckets_[b].v1, v);
   ((IterateKernel<K, V1, V3>*)info_.iterkernel)->priority(buckets_[b].priority, buckets_[b].v2, buckets_[b].v1);
 
