@@ -329,7 +329,7 @@ public:
 
     void run_loop(TypedGlobalTable<K, V, V, D>* a) {
         Timer timer;                        //for experiment, time recording
-        //double totalF1 = 0;                 //the sum of delta_v, it should be smaller and smaller as iterations go on
+        double totalF1 = 0;                 //the sum of delta_v, it should be smaller and smaller as iterations go on
         double totalF2 = 0;                 //the sum of v, it should be larger and larger as iterations go on
         long updates = 0;                   //for experiment, recording number of update operations
         output = new vector<pair<K, V> >;
@@ -355,9 +355,9 @@ public:
             delete it2;                         //delete the table iterator
 
             //for experiment
-            //cout << "time " << timer.elapsed() << " worker " << current_shard() << " delta " << totalF1 <<
-                   // " progress " << totalF2 << " updates " << updates << 
-                   // " totalsent " << a->sent_bytes_ << " total " << endl;
+            cout << "time " << timer.elapsed() << " worker " << current_shard() << " delta " << totalF1 <<
+                    " progress " << totalF2 << " updates " << updates << 
+                    " totalsent " << a->sent_bytes_ << " total " << endl;
         }
     }
 
